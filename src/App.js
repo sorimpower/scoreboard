@@ -4,6 +4,7 @@ import './App.css';
 import {Header} from './header'; //Header는 개별 모듈화한거고
 import Player from './player';   //Player는 전체 모듈화한거라서 import 규칙이 다름
 
+
 //function 컴포넌트였던 App을 class 컴포넌트로 변경()
 class App extends React.Component {
   state = {
@@ -18,11 +19,11 @@ class App extends React.Component {
   render() {
     return (
       <div className="scoreboard">
-        <Header title="My Scoreboard" totalPlayers={1 + 10}/>
-        {
+        <Header title="My Scoreboard" players={this.state.players}/>
+				{
           this.state.players.map((player) => {
             return (
-              <Player name={player.name} score={player.score} id={player.id} key={player.id}
+							<Player name={player.name} score={player.score} id={player.id} key={player.id}
                       removePlayer={this.handleRemovePlayer} changeScore={this.handleChangeScore} />
             )
           })
