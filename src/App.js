@@ -41,7 +41,15 @@ class App extends React.Component {
 
   //callback function
   handleChangeScore = (id, score) => {
-    console.log('handleChangeScore', id,score);
+    console.log('handleChangeScore', id, score);
+
+    this.setState(prevState => {
+    	const player = prevState.players.find(player => player.id === id);
+    	player.score += score;
+    	return {
+    		player : { ...prevState.players } //새로운 바구니를 만드는거, ...:배열안의 요소들을 가져와서 펼쳐라
+			}
+		})
   }
 
 }
