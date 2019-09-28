@@ -44,10 +44,20 @@ class App extends React.Component {
     console.log('handleChangeScore', id, score);
 
     this.setState(prevState => {
-    	const player = prevState.players.find(player => player.id === id);
-    	player.score += score;
-    	return {
-    		player : { ...prevState.players } //새로운 바구니를 만드는거, ...:배열안의 요소들을 가져와서 펼쳐라
+    	// const player = prevState.players.find(player => player.id === id);
+    	// player.score += score;
+    	// return {
+    	// 	player : { ...prevState.players } //새로운 바구니를 만드는거, ...:배열안의 요소들을 가져와서 펼쳐라
+			// }
+
+			//map으로 ..(원래 배열이 바뀌기 때문에 copy가 필요없음)
+			return {
+				player:prevState.players.map(player => {
+					if(player.id === id){
+						player.score += score;
+					}
+					return player;
+				})
 			}
 		})
   }
