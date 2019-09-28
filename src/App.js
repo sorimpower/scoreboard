@@ -8,7 +8,7 @@ import Player from './player';   //Player는 전체 모듈화한거라서 import
 class App extends React.Component {
   state = {
     players : [
-      {name : 'LDK', score : 30, id : 1},
+      {name : 'LDK', score : 30, id : 1}, //state를 부모 컴포넌트에 정의해주는게 lifting up (https://eastflag.co.kr/react/scoreboard-by-c-r-a/component-deep-dive/)
       {name : 'JSH', score : 40, id : 2},
       {name : 'SHE', score : 50, id : 3},
       {name : 'KIM', score : 60, id : 4}
