@@ -23,7 +23,7 @@ class App extends React.Component {
           this.state.players.map((player) => {
             return (
               <Player name={player.name} score={player.score} id={player.id} key={player.id}
-                      removePlayer={this.handleRemovePlayer} />
+                      removePlayer={this.handleRemovePlayer} changeScore={this.handleChangeScore} />
             )
           })
         }
@@ -32,10 +32,16 @@ class App extends React.Component {
     );
   }
 
+  //callback function
   handleRemovePlayer = (id) => {
     this.setState(prevState => ({
       players:prevState.players.filter(player => player.id !== id)
     })); //함수의 중괄호가 아니라 json 객체를리턴한다고 ()를 감싸준것
+  }
+
+  //callback function
+  handleChangeScore = (id, score) => {
+    console.log('handleChangeScore', id,score);
   }
 
 }
