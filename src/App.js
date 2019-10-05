@@ -1,32 +1,24 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import {Header} from './header'; //Header는 개별 모듈화한거고
 import Player from './player';   //Player는 전체 모듈화한거라서 import 규칙이 다름
 import {AddPlayerForm} from './addPlayerForm';
+import {connect} from "react-redux";
 
 
 //function 컴포넌트였던 App을 class 컴포넌트로 변경()
 class App extends React.Component {
 	maxId = 4; //클래스의 속성
-  state = {
-    players : [
-      {name : 'LDK', score : 30, id : 1}, //state를 부모 컴포넌트에 정의해주는게 lifting up (https://eastflag.co.kr/react/scoreboard-by-c-r-a/component-deep-dive/)
-      {name : 'JSH', score : 40, id : 2},
-      {name : 'SHE', score : 50, id : 3},
-      {name : 'KIM', score : 60, id : 4}
-    ]
-  };
 
   render() {
     return (
       <div className="scoreboard">
         <Header
 					title="My Scoreboard"
-					players={this.state.players}
+					players={this.props.players}
 				/>
 				{
-          this.state.players.map((player) => {
+          this.props.players.map((player) => {
             return (
 							<Player
 								name={player.name}
@@ -76,22 +68,31 @@ class App extends React.Component {
 		})
   }
 
-handleAddPlayer = (name) => {
-	console.log("handleAddPlayer",name);
-	this.setState(prevState => {
-		// prevState.players.push({name : name, score : 0, id : ++this.maxId});
-		// return {
-		// 	players: [ ...prevState.players] //원래 배열에 새로운 배열을 옮겨주는 것
-		// }
+	handleAddPlayer = (name) => {
+		console.log("handleAddPlayer",name);
+		this.setState(prevState => {
+			// prevState.players.push({name : name, score : 0, id : ++this.maxId});
+			// return {
+			// 	players: [ ...prevState.players] //원래 배열에 새로운 배열을 옮겨주는 것
+			// }
 
-		const players = [ ...prevState.players]; //원본배열을 복사해 새로운 배열을 만들고
-		players.push({name : name, score : 0, id : ++this.maxId}); //새로운 배열에 공을 하나더 추가한 뒤
-		return {
-			players : players
-		}//새로운 배열을 return 하면 됨(그러면 원본배열을 훼손하지 않음)
-	});
+			const players = [ ...prevState.players]; //원본배열을 복사해 새로운 배열을 만들고
+			players.push({name : name, score : 0, id : ++this.maxId}); //새로운 배열에 공을 하나더 추가한 뒤
+			return {
+				players : players
+			}//새로운 배열을 return 하면 됨(그러면 원본배열을 훼손하지 않음)
+		});
+	}
 }
 
-}
 
-export default App;
+
+//store의 state를 props 매핑하는 과정
+const mapStateToProps = (state) => ({
+	//왼쪽은 props, 오른쪽이 store의 state
+	players : state.playerReducer.players
+});
+
+//curring펑션 : 펑션에 파라미터로 펑션을 전달해주는 것
+//HoC(Higher-Order Components) : 대표적 예로 redux의 connect(), 컴포넌트를 입려받아서 새로운 컴포넌트를 생성한다는 개념
+export default connect(mapStateToProps)(App);
