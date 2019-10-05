@@ -4,14 +4,15 @@ import Counter from "./counter";
 
 class Player extends React.Component { //PureComponent는 바뀐 부분만 렌더링 일어남
 	render() {
-		console.log(this.props.name, ' rendered');
+		const {removePlayer,id,name,score,changeScore} = this.props;
+
 		return (
 			<div className="player">
 				<span className="player-name">
-					<button className="remove-player" onClick={() => this.props.removePlayer(this.props.id)}> X </button>
-					{this.props.name}
+					<button className="remove-player" onClick={() => removePlayer(id)}> X </button>
+					{name}
 				</span>
-				<Counter score={this.props.score} id={this.props.id} changeScore={this.props.changeScore}/> {/*JSX Expression*/}
+				<Counter score={score} id={id} changeScore={changeScore}/> {/*JSX Expression*/}
 			</div>
 		)
 	}
