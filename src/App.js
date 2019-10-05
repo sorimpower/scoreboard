@@ -8,6 +8,7 @@ import {AddPlayerForm} from './addPlayerForm';
 
 //function 컴포넌트였던 App을 class 컴포넌트로 변경()
 class App extends React.Component {
+	maxId = 4; //클래스의 속성
   state = {
     players : [
       {name : 'LDK', score : 30, id : 1}, //state를 부모 컴포넌트에 정의해주는게 lifting up (https://eastflag.co.kr/react/scoreboard-by-c-r-a/component-deep-dive/)
@@ -75,9 +76,21 @@ class App extends React.Component {
 		})
   }
 
-  handleAddPlayer(name) {
-  	console.log("handleAddPlayer",name);
-	}
+handleAddPlayer = (name) => {
+	console.log("handleAddPlayer",name);
+	this.setState(prevState => {
+		// prevState.players.push({name : name, score : 0, id : ++this.maxId});
+		// return {
+		// 	players: [ ...prevState.players] //원래 배열에 새로운 배열을 옮겨주는 것
+		// }
+
+		const players = [ ...prevState.players]; //원본배열을 복사해 새로운 배열을 만들고
+		players.push({name : name, score : 0, id : ++this.maxId}); //새로운 배열에 공을 하나더 추가한 뒤
+		return {
+			players : players
+		}//새로운 배열을 return 하면 됨(그러면 원본배열을 훼손하지 않음)
+	});
+}
 
 }
 
