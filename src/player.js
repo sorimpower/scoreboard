@@ -1,8 +1,13 @@
 import React from 'react';
 import Counter from "./counter";
-
+import PropTypes from 'prop-types';
 
 class Player extends React.Component { //PureComponent는 바뀐 부분만 렌더링 일어남
+	static propTypes = {
+		removePlayer : PropTypes.func,
+		id : PropTypes.number
+	}
+
 	render() {
 		const {removePlayer,id,name,score,changeScore} = this.props;
 

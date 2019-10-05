@@ -1,26 +1,21 @@
 import React from 'react';
 
 export class AddPlayerForm extends React.Component {
-	state = {
-		value : ''
-	}
-
-	handleValuechange = (event) => {
-		this.setState({value : event.target.value});
-	}
+	textInput = React.createRef();
 
 	handleSubmit = (event) => {
 		event.preventDefault(); //기본 설정된 이벤트를 막는 것
 		//event.stopPropagation(); //상위 이벤트를 막는 것
+		//
+		// const form = document.getElementById("form");
+		// const player = document.getElementById("player");
+		// console.log(form.checkValidity()); //html5에서 제공하는 함수
+		// console.log(player.validity.valid); //html5에서 제공하는 값
+		//
 
-		const form = document.getElementById("form");
-		const player = document.getElementById("player");
-		console.log(form.checkValidity()); //html5에서 제공하는 함수
-		console.log(player.validity.valid); //html5에서 제공하는 값
-
-
-		this.props.addPlayer(this.state.value);
-		this.setState({value : ''});
+		this.props.addPlayer(this.textInput.current.value);
+		event.currentTarget.reset();
+		// this.setState({value : ''});
 	}
 
 	render() {
@@ -35,9 +30,8 @@ export class AddPlayerForm extends React.Component {
 					className="input"
 					id="players"
 					type="text"
+					ref={this.textInput}
 					placeholder="enter a player's name"
-					value={this.state.value}
-					onChange={this.handleValuechange}
 				></input>
 				<input
 					className="input"
