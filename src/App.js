@@ -20,16 +20,27 @@ class App extends React.Component {
   render() {
     return (
       <div className="scoreboard">
-        <Header title="My Scoreboard" players={this.state.players}/>
+        <Header
+					title="My Scoreboard"
+					players={this.state.players}
+				/>
 				{
           this.state.players.map((player) => {
             return (
-							<Player name={player.name} score={player.score} id={player.id} key={player.id}
-                      removePlayer={this.handleRemovePlayer} changeScore={this.handleChangeScore} />
+							<Player
+								name={player.name}
+								score={player.score}
+								id={player.id}
+								key={player.id}
+								removePlayer={this.handleRemovePlayer}
+								changeScore={this.handleChangeScore}
+							/>
             )
           })
         }
-			<AddPlayerForm></AddPlayerForm>
+			<AddPlayerForm
+				addPlayer={this.handleAddPlayer}
+			/>
       </div>
     );
   }
@@ -63,6 +74,10 @@ class App extends React.Component {
 			}
 		})
   }
+
+  handleAddPlayer(name) {
+  	console.log("handleAddPlayer",name);
+	}
 
 }
 
